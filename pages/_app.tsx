@@ -3,16 +3,14 @@ import '../assets/css/style.css'
 
 import Head from 'next/head'
 import App from 'next/app'
-import fetch from 'isomorphic-fetch'
 import es6Promise from 'es6-promise'
 
 import { AppContext, AppProps } from 'next/app'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import AppHeader from '../components/Header'
 import { Footer } from '../components/Footer'
-import Cookie from 'cookie'
-import { parseJwt } from '../helpers'
+import { getTokenSSRANDCSR } from '../helpers'
 import userService from '../services/userService'
 import { useGlobalState } from '../state'
 
@@ -21,8 +19,10 @@ es6Promise.polyfill()
 function MyApp({ Component, pageProps, router }: AppProps) {
   const pathName = router.pathname
   const [currentUser, setCurrentUser] = useGlobalState('currentUser')
+  const [, setToken] = useGlobalState('token')
 
   useMemo(() => {
+    setToken(pageProps.token)
     setCurrentUser(pageProps.userInfo)
   }, [])
 
@@ -73,21 +73,20 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   let userRes = null
+  let [token, userToken] = getTokenSSRANDCSR(appContext)
   const appProps = await App.getInitialProps(appContext);
   if (typeof window === 'undefined') {
     // SSR
-    const cookieString = appContext.ctx.req.headers.cookie || ''
-    const token = Cookie.parse(cookieString).token || ''
-    const userToken = parseJwt(token)
     if (userToken && userToken.id) {
       userRes = await userService.getUserById(userToken.id)
     }
   }
-  
+  console.log(token)
 
   return { 
 		pageProps: {
       ...appProps.pageProps,
+      token,
       userInfo: userRes && userRes.user
 		}
 	}

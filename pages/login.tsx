@@ -3,6 +3,7 @@ import api from '../services/api'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useGlobalState } from '../state'
+import { useNotAuthen } from '../helpers/useAuthen'
 
 
 interface FormLogin {
@@ -15,6 +16,7 @@ const initFormData: FormLogin = {
 }
 
 export default function Login() {
+  useNotAuthen()
   const router = useRouter()
   const [formData, setFormData] = useState<FormLogin>(initFormData)
   const errorString = router.query.error
