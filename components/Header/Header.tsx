@@ -1,8 +1,22 @@
 import Link from 'next/link'
 import { useGlobalState } from '../../state'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 export default function Header() {
-  const [userInfo] = useGlobalState('currentUser')
+  const [userInfo, setUserInfo] = useGlobalState('currentUser')
+  const [, setToken] = useGlobalState('token')
+  const router = useRouter()
+
+  const handleLogout = () => {
+    const check = window.confirm('Are you sure?')
+    if (check) {
+      Cookies.remove('token')
+      setToken('')
+      setUserInfo(null)
+      router.push('/login')
+    }
+  }
 
   return (
     <header>
@@ -105,11 +119,11 @@ export default function Header() {
             ? <div className="wrapper-user">
                 <a className="user-header">
                   <span className="avatar">
-                    <img src={userInfo.profilepicture} alt="avatar"/>
+                    <img src={userInfo.profilepicture || '/images/avatar-02.png'} alt="avatar"/>
                   </span>
                   <span className="email">{userInfo.email}</span>
                 </a>
-                <div className="ass1-header__btn-upload ass1-btn">Logout</div>
+                <div onClick={handleLogout} className="ass1-header__btn-upload ass1-btn">Logout</div>
               </div> 
             : <Link href="/login">
                 <a className="ass1-header__btn-upload ass1-btn">

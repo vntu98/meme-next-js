@@ -75,11 +75,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   let userRes = null
   let [token, userToken] = getTokenSSRANDCSR(appContext)
   const appProps = await App.getInitialProps(appContext);
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' && userToken?.id && userToken?.email) {
     // SSR
-    if (userToken && userToken.id) {
-      userRes = await userService.getUserById(userToken.id)
-    }
+    userRes = await userService.getUserById(userToken.id)
   }
   console.log(token)
 

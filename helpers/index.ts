@@ -22,12 +22,12 @@ type UserToken = {
   email: string
 }
 
-export const getTokenSSRANDCSR = (req: AppContext): [string, UserToken | null] => {
+export const getTokenSSRANDCSR = (req?: AppContext): [string, UserToken | null] => {
   let token = ''
   let userToken = null
   if (typeof window === 'undefined') {
     // SSR
-    const cookieString = req.ctx.req.headers.cookie || ''
+    const cookieString = req?.ctx?.req?.headers?.cookie || ''
     token = Cookie.parse(cookieString).token
     userToken = token && parseJwt(token)
   } else {
@@ -35,4 +35,10 @@ export const getTokenSSRANDCSR = (req: AppContext): [string, UserToken | null] =
   }
 
   return [token, userToken]
+}
+
+export const validateEmail = (email: string):boolean => {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  
+  return re.test(email);
 }

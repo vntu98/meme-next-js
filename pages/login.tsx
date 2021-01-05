@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import api from '../services/api'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useGlobalState } from '../state'
 import { useNotAuthen } from '../helpers/useAuthen'
+import Link from 'next/link'
+import { Button } from '../components/Button'
 
 
 interface FormLogin {
@@ -20,7 +20,7 @@ export default function Login() {
   const router = useRouter()
   const [formData, setFormData] = useState<FormLogin>(initFormData)
   const errorString = router.query.error
-  const [currentUser] = useGlobalState('currentUser')
+  const [loading, setLoading] = useState(false)
   
   useEffect(() => {
     if (errorString) {
@@ -68,6 +68,8 @@ export default function Login() {
 
   const handleSubmitForm = (e) => {
     e.preventDefault()
+    if (loading) return
+    setLoading(true)
     const formElement = e.target
 
     // setTimeout(() => {
@@ -109,8 +111,10 @@ export default function Login() {
               <a href="#">Copy</a>
             </div>
             <div className="ass1-login__send">
-              <a href="dang-ky.html">Đăng ký một tài khoản</a>
-              <button type="submit" className="ass1-btn">Đăng nhập</button>
+              <Link href='/register'>
+                <a href="dang-ky.html">Đăng ký một tài khoản</a>
+              </Link>
+              <Button type="submit" className="ass1-btn" isLoading={loading}>Đăng nhập</Button>
             </div>
           </form>
         </div>
