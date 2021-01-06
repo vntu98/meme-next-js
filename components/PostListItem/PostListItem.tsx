@@ -1,6 +1,6 @@
 import { PostItem } from '../PostItem'
 
-export default function PostListItem() {
+export default function PostListItem({ listPosts }) {
   return (
     <div className="ass1-section__list">
       <PostItem />

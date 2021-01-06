@@ -22,12 +22,11 @@ type UserToken = {
   email: string
 }
 
-export const getTokenSSRANDCSR = (req?: AppContext): [string, UserToken | null] => {
+export const getTokenSSRANDCSR = (cookieString = ''): [string, UserToken | null] => {
   let token = ''
   let userToken = null
   if (typeof window === 'undefined') {
     // SSR
-    const cookieString = req?.ctx?.req?.headers?.cookie || ''
     token = Cookie.parse(cookieString).token
     userToken = token && parseJwt(token)
   } else {

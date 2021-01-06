@@ -73,13 +73,13 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   let userRes = null
-  let [token, userToken] = getTokenSSRANDCSR(appContext)
+  const cookieString = appContext.ctx.req.headers.cookie
+  let [token, userToken] = getTokenSSRANDCSR(cookieString)
   const appProps = await App.getInitialProps(appContext);
   if (typeof window === 'undefined' && userToken?.id && userToken?.email) {
     // SSR
     userRes = await userService.getUserById(userToken.id)
   }
-  console.log(token)
 
   return { 
 		pageProps: {

@@ -1,4 +1,5 @@
-export default function HomeSideBar() {
+export default function HomeSideBar({ userPosts }) {
+  
   return (
     <aside className="ass1-aside">
       <div className="ass1-content-head__t">
