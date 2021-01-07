@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
     userPosts: userPostsRes?.posts || []
   }
   return {
-    props: {}, // will be passed to the page component as props
+    props: props, // will be passed to the page component as props
   }
 }
 

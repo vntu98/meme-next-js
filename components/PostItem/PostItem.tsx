@@ -1,12 +1,33 @@
-export default function PostItem() {
+import Link from 'next/link'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/vi'
+
+dayjs.extend(relativeTime)
+dayjs.locale('vi')
+
+export default function PostItem({ post, customClass = '' }) {
+  const timeFormat = dayjs(post.time_added).fromNow()
+  let className = 'ass1-section__item'
+
+  if (customClass) {
+    className = className + " " + customClass
+  }
+
   return (
-    <div className="ass1-section__item">
+    <div className={className}>
       <div className="ass1-section">
         <div className="ass1-section__head">
-          <a href="bai-viet-chi-tiet.html" className="ass1-section__avatar ass1-avatar"><img src="/images/avatar-02.png" alt="" /></a>
+          <Link href={`/user/${encodeURIComponent(post.USERID)}`}>
+            <a className="ass1-section__avatar ass1-avatar">
+              <img src={post.profilepicture || '/images/avatar-02.png'} alt="" />
+            </a>
+          </Link>
           <div>
-            <a href="bai-viet-chi-tiet.html" className="ass1-section__name">Thanos</a>
-            <span className="ass1-section__passed">2 giờ trước</span>
+          <Link href={`/users/${encodeURIComponent(post.USERID)}`}>
+            <a className="ass1-section__name">{post.fullname}</a>
+          </Link>
+            <span className="ass1-section__passed">{timeFormat}</span>
           </div>
         </div>
         <div className="ass1-section__content">
@@ -14,11 +35,17 @@ export default function PostItem() {
             deserunt ut, aperiam quas! Placeat blanditiis consequatur, deserunt facere iusto
             amet a ad suscipit laudantium unde quidem perferendis!</p>
           <div className="ass1-section__image">
-            <a href="bai-viet-chi-tiet.html"><img src="/images/microphone-1209816_1920.jpg" alt="" /></a>
+          <Link href={`/posts/${encodeURIComponent(post.PID)}`}>
+            <a><img src={post.url_image} alt="" /></a>
+          </Link>
           </div>
         </div>
         <div className="ass1-section__footer">
-          <a href="#" className="ass1-section__btn-comment ass1-btn-icon"><i className="icon-Comment_Full" /><span>982</span></a>
+        <Link href={`/posts/${encodeURIComponent(post.PID)}`}>
+          <a className="ass1-section__btn-comment ass1-btn-icon">
+            <i className="icon-Comment_Full" /><span>{post.count || 0}</span>
+          </a>
+          </Link>
         </div>
       </div>
     </div>

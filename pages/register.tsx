@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import { useNotAuthen } from "../helpers/useAuthen"
 import { Button } from '../components/Button'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const initRegisterData = {
   fullname: {
@@ -117,7 +118,9 @@ export default function Login() {
   return (
     <div className="ass1-login">
       <div className="ass1-login__logo">
-        <a href="index.html" className="ass1-logo">Meme</a>
+        <Link href='/'>
+          <a className="ass1-logo">Meme</a>
+        </Link>
       </div>
       <div className="ass1-login__content">
         <p>Đăng ký một tài khoản</p>
@@ -167,7 +170,9 @@ export default function Login() {
               <small className="form-text text-danger">{registerData.repassword.error}</small>
             </div>
             <div className="ass1-login__send">
-              <a href="dang-nhap.html">Đăng nhập</a>
+              <Link href="/login">
+                <a>Đăng nhập</a>
+              </Link>
               <Button type="submit" className="ass1-btn" isLoading={loading}>Đăng ký</Button>
             </div>
           </form>
