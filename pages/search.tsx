@@ -23,7 +23,7 @@ const SearchPage = ({ listPosts }) => {
         className={'ass1-section__wrap row ass1-section__isotope-init'} // default ''
       >
         {
-          listPosts.map(post => <PostItem post={post} customClass='col-lg-6' />)
+          listPosts.map(post => <PostItem post={post} customClass='col-lg-6' isHighlight={true} query={searchStr} />)
         }
       </Masonry>
     </div>

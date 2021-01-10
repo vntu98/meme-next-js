@@ -2222,10 +2222,10 @@ select.form-control:focus {
 .ass1-header__menu > li:focus > a {
   color: #3482e2;
 }
-/*.ass1-header__menu > li:hover > .ass1-header__nav {
+.ass1-header__menu > li:hover > .ass1-header__nav {
   display: block !important;
 }
-*/.ass1-header__menu-transition {
+.ass1-header__menu-transition {
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -2236,7 +2236,7 @@ select.form-control:focus {
   position: absolute;
   width: 100%;
   padding: 24px;
-  top: 100%;
+  top: 40%;
   left: 0;
   right: 0;
   background-color: #ffffff;
@@ -2576,4 +2576,8 @@ select.form-control:focus {
 .ass1-aside .ass1-aside__edit-post-head .ass1-checkbox span {
   width: 20px;
   height: 20px;
+}
+.mark, mark {
+  background-color: yellow;
+  padding: 0 !important;
 }

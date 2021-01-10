@@ -1,0 +1,21 @@
+.loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999999;
+  background-color: rgb(0 0 0 / 0.5);
+}
+.loading-page svg {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#nprogress .bar {
+  z-index: 999999999999;
+  height: 5px;
+}

@@ -6,6 +6,12 @@ const postService = {
 
     return api.callJson(url)
   },
+  getPostPagingByCategory: async ({ pagesize = 10, currPage = 1, tagIndex = '' } = {}) => {
+    if (!tagIndex) return null
+    const url = `/post/getListByCategory.php?pagesize=${pagesize}&currPage=${currPage}&tagIndex=${tagIndex}`
+
+    return api.callJson(url)
+  },
   getPostByUserId: async ({ userId, token }) => {
     const url = `/post/getListPostUserID.php?userid=${userId}`
 
@@ -21,7 +27,10 @@ const postService = {
     })
   },
   getPostsSearch: async ({ query }) => {
-    return api.callJson(`/post/search.php?query=${query}`)
+    return api.callJson(`/post/search.php?query=${encodeURI(query)}`)
+  },
+  getCategories: async () => {
+    return api.callJson('/categories/index.php')
   }
 }
 

@@ -41,3 +41,15 @@ export const validateEmail = (email: string):boolean => {
   
   return re.test(email);
 }
+
+export const highlightText = (originStr: string, queryStr: string) => {
+  const indexStart = originStr.toLowerCase().indexOf(queryStr.toLocaleLowerCase())
+
+  if (indexStart === -1) return originStr
+
+  const beforeStr = originStr.substring(0, indexStart)
+  const middle = originStr.substring(beforeStr.length, beforeStr.length + queryStr.length)
+  const afterStr = originStr.substring(beforeStr.length + queryStr.length)
+
+  return beforeStr + '<mark>' + middle + '</mark>' + afterStr
+}
