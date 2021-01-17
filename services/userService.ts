@@ -22,6 +22,10 @@ type ProfileData = {
 
 const userService = {
   getUserById: (userId: string) => {
+    if (!userId) {
+      return null
+    }
+    
     return api.callJson(`/member/member.php?userid=${userId}`)
   },
   register: (data: RegisterData) => {

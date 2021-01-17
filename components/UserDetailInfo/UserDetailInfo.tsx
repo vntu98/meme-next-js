@@ -8,7 +8,7 @@ const UserDetailInfo = ({ userDetailInfo, postCount }) => {
 
   if (!userDetailInfo) return null
 
-  const check = currentUser.USERID === userDetailInfo.USERID
+  const check = currentUser?.USERID === userDetailInfo.USERID
 
   return (
     <div className="ass1-head-user">

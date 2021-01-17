@@ -19,6 +19,21 @@ const postService = {
     data.append('post_content', post_content)
     data.append('category', category.toString())
     data.append('url_image', url_image)
+
+    if (obj_image.file) {
+      data.append('obj_image', obj_image.file)
+    }
+
+    return api.callFormData(url, {data, token})
+  },
+  editPost: async({ post_content, url_image, category, obj_image, postid }: TypePostCreate, token: string) => {
+    const url = '/post/edit.php'
+    const data = new FormData()
+    data.append('post_content', post_content)
+    data.append('category', category.toString())
+    data.append('url_image', url_image)
+    data.append('postid', postid)
+
     if (obj_image.file) {
       data.append('obj_image', obj_image.file)
     }
@@ -50,11 +65,35 @@ const postService = {
       token
     })
   },
+  getPostByPostId: async ({ postId, token }) => {
+    if (!postId || !token) {
+      return {
+        status: 500,
+        error: ''
+      }
+    }
+
+    const url = `/post/post.php?postid=${postId}`
+    return api.callJson(url, {token})
+  },
   getPostsSearch: async ({ query }) => {
     return api.callJson(`/post/search.php?query=${encodeURI(query)}`)
   },
   getCategories: async () => {
     return api.callJson('/categories/index.php')
+  },
+  getCommentsByPostId: async (postId) => {
+    return api.callJson(`/comment/comments.php?postid=${postId}`)
+  },
+  postComment: async (postid, comment, token) => {
+    const url = '/comment/add_new.php'
+    const data = {
+      postid,
+      comment
+    }
+    const method = 'POST'
+
+    return api.callJson(url, {data, method, token})
   }
 }
 

@@ -22,7 +22,7 @@ const UserDetail = ({ userDetailInfo, userDetailPost }) => {
   return (
     <div className="container">
       <UserDetailInfo userDetailInfo={userDetailInfo} postCount={userDetailPost.length}/>
-      <UserDetailPost userDetailPost={userDetailPost}/>
+      <UserDetailPost userDetailInfo={userDetailInfo} userDetailPost={userDetailPost}/>
     </div>
   )
 }

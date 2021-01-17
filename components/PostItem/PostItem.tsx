@@ -7,9 +7,15 @@ import { highlightText } from '../../helpers'
 dayjs.extend(relativeTime)
 dayjs.locale('vi')
 
-export default function PostItem({ post, customClass = '', isHighlight, query }) {
-  const timeFormat = dayjs(post.time_added).fromNow()
+export default function PostItem({ post, customClass = '', isHighlight, query, isOwner }) {
+  console.log(isOwner)
+  const timeFormat = dayjs(post?.time_added).fromNow()
+  let href = `/posts/${post?.PID}`
   let className = 'ass1-section__item'
+
+  if (isOwner) {
+    href += '/edit'
+  }
 
   if (customClass) {
     className = className + " " + customClass
@@ -17,10 +23,10 @@ export default function PostItem({ post, customClass = '', isHighlight, query })
 
   const renderFullName = () => {
     if (isHighlight && query) {
-      return highlightText(post.fullname, query)
+      return highlightText(post?.fullname, query)
     }
 
-    return post.fullname
+    return post?.fullname
   }
 
   const renderContent = () => {
@@ -31,17 +37,19 @@ export default function PostItem({ post, customClass = '', isHighlight, query })
     return post.post_content
   }
 
+  if (!post) return null
+
   return (
     <div className={className}>
       <div className="ass1-section">
         <div className="ass1-section__head">
-          <Link href={`/user/${encodeURIComponent(post.USERID)}`}>
+          <Link href={`/user/${post.USERID}`}>
             <a className="ass1-section__avatar ass1-avatar">
               <img src={post.profilepicture || '/images/avatar-02.png'} alt="" />
             </a>
           </Link>
           <div>
-          <Link href={`/users/${encodeURIComponent(post.USERID)}`}>
+          <Link href={`/users/${post.USERID}`}>
             <a 
               className="ass1-section__name" 
               dangerouslySetInnerHTML={{ __html: renderFullName() }}
@@ -55,13 +63,13 @@ export default function PostItem({ post, customClass = '', isHighlight, query })
             dangerouslySetInnerHTML={{__html: renderContent() }}
           />
           <div className="ass1-section__image">
-          <Link href={`/posts/${encodeURIComponent(post.PID)}`}>
+          <Link href={href}>
             <a><img src={post.url_image} alt="" /></a>
           </Link>
           </div>
         </div>
         <div className="ass1-section__footer">
-        <Link href={`/posts/${encodeURIComponent(post.PID)}`}>
+        <Link href={href}>
           <a className="ass1-section__btn-comment ass1-btn-icon">
             <i className="icon-Comment_Full" /><span>{post.count || 0}</span>
           </a>
